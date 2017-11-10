@@ -9,7 +9,7 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="xiong-chiamiov-plus"
-ZSH_THEME="robbyrussell"
+ZSH_THEME="steeef"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -64,6 +64,8 @@ alias vaghalt='vagrant halt'
 ## Miscellaneous Aliases
 alias htop='sudo htop'
 
+# z directory jumper
+. ~/dotfiles/z/z.sh
 # Shell Functions
 # qfind - used to quickly find files that contain a string in a directory
 qfind () {
@@ -76,3 +78,14 @@ qfind () {
 if [ -f /usr/bin/vim ]; then
   export EDITOR=/usr/bin/vim
 fi
+
+# pyenv settings
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+# pyenv virtualenv plug-in
+eval "$(pyenv virtualenv-init -)"
+
