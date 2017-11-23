@@ -89,3 +89,11 @@ fi
 # pyenv virtualenv plug-in
 eval "$(pyenv virtualenv-init -)"
 
+# MacVim alias
+alias mvim='/Applications/MacVim.app/Contents/bin/mvim -v'
+
+# Sublime from command line
+subl () {
+    open -a "Sublime Text" $@
+}
+
