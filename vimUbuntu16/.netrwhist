@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/dinies/GitRepos/NetworkInfrastructures/HM1_B_1616301/PC1/etc/network'
+let g:netrw_dirhist_2='/home/dinies/GitRepos/NetworkInfrastructures/HM1_B_1616301/PC1/etc'
+let g:netrw_dirhist_3='/home/dinies/GitRepos/NetworkInfrastructures/HM1_B_1616301/PC1/etc/network'
