@@ -12,7 +12,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="steeef"
 
 # Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
 # DISABLE_AUTO_UPDATE="true"
@@ -43,23 +43,15 @@ fi
 
 # Shell Aliases
 ## Git Aliases
-alias gs='git status '
 alias ga='git add '
 alias gb='git branch '
 alias gc='git commit'
 alias gd='git diff'
 alias go='git checkout '
-alias gk='gitk --all&'
-alias gx='gitx --all'
-alias got='git '
-alias get='git '
-
-## Vagrant Aliases
-alias vag='vagrant'
-alias vagup='vagrant up'
-alias vagdestroy='vagrant destroy'
-alias vagssh='vagrant ssh'
-alias vaghalt='vagrant halt'
+###alias gk='gitk --all&'
+###alias gx='gitx --all'
+###alias got='git '
+###alias get='git '
 
 ## Miscellaneous Aliases
 alias htop='sudo htop'
@@ -86,8 +78,10 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
-# pyenv virtualenv plug-in
-eval "$(pyenv virtualenv-init -)"
+# # pyenv virtualenv plug-in
+if which pyenv-virtualenv-init > /dev/null; then
+   eval "$(pyenv virtualenv-init -)"
+fi
 
 # MacVim alias
 alias mvim='/Applications/MacVim.app/Contents/bin/mvim -v'
@@ -96,4 +90,11 @@ alias mvim='/Applications/MacVim.app/Contents/bin/mvim -v'
 subl () {
     open -a "Sublime Text" $@
 }
+
+#MacTex binaries linking
+export PATH="/Library/Tex/texbin:$PATH"
+
+#python path for iphithon and jupiter
+export PATH="~/.local/bin:$PATH"
+
 
