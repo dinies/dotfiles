@@ -98,3 +98,6 @@ export PATH="/Library/Tex/texbin:$PATH"
 export PATH="~/.local/bin:$PATH"
 
 
+
+
+
