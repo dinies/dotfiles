@@ -127,4 +127,6 @@ export PATH="${PATH}":/home/dinies/lib/swift-lang/usr/bin
 #  export CHANGE_MINIKUBE_NONE_USER=true
 #  export KUBECONFIG=$HOME/.kube/config
 
+# Scaling ratio of the screen change:   
+function setzoom() { gsettings set org.gnome.desktop.interface text-scaling-factor "$@"; }
 
