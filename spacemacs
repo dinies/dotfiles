@@ -1,1 +1,1 @@
-./spacemacs_conf/osxspacemacs
+./spacemacs_conf/ubuntuspacemacs
