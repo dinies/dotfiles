@@ -28,7 +28,7 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx zsh-syntax-highlighting brew repo sudo knife vagrant bundler web-search)
+plugins=(git kubectl osx zsh-syntax-highlighting brew repo sudo knife vagrant bundler web-search)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -98,6 +98,11 @@ export PATH="/Library/Tex/texbin:$PATH"
 export PATH="~/.local/bin:$PATH"
 
 
+#swiftenv
+export SWIFTENV_ROOT=/usr/local/var/swiftenv 
+if which swiftenv > /dev/null; then eval "$(swiftenv init -)"; fi
 
+#swift version choose:
+export PATH=/Library/Developer/Toolchains/swift-4.2-DEVELOPMENT-SNAPSHOT-2018-08-07-a.xctoolchain/usr/bin:"${PATH}"
 
 
