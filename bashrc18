@@ -130,3 +130,13 @@ export PATH="${PATH}":/home/dinies/lib/swift-lang/usr/bin
 # Scaling ratio of the screen change:   
 function setzoom() { gsettings set org.gnome.desktop.interface text-scaling-factor "$@"; }
 
+# pyenv and virtualenv plug in
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+eval "$(pyenv init -)"
+fi
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
