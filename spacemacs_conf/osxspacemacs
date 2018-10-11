@@ -32,7 +32,7 @@ values."
    dotspacemacs-configuration-layers
    '(
      ;; lua
-     ;; swift
+     swift
      ;; vimscript
      markdown
      octave
