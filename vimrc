@@ -43,6 +43,11 @@ set expandtab
 set shiftwidth=2
 set softtabstop=2
 
+
+set undodir=~/.vim/.undo//
+set backupdir=~/.vim/.backup//
+set directory=~/.vim/.swp//
+
 autocmd VimEnter * command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>, '', <bang>0)
 
