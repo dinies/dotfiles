@@ -1,89 +1,63 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   Filename: .vimrc                                                         "
-" Maintainer: Michael J. Smalley <michaeljsmalley@gmail.com>                 "
-"        URL: http://github.com/michaeljsmalley/dotfiles                     "
-"                                                                            "
-"                                                                            "
-" Sections:                                                                  "
-"   01. General ................. General Vim behavior                       "
-"   02. Events .................. General autocmd events                     "
-"   03. Theme/Colors ............ Colors, fonts, etc.                        "
-"   04. Vim UI .................. User interface behavior                    "
-"   05. Text Formatting/Layout .. Text, tab, indentation related             "
-"   06. Custom Commands ......... Any custom command aliases                 "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 01. General                                                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"set nocompatible         " get rid of Vi compatibility mode. SET FIRST!
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 02. Events                                                                 "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'itchyny/lightline.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tpope/vim-eunuch'
 
-" In Makefiles DO NOT use spaces instead of tabs
-"autocmd FileType make setlocal noexpandtab
-" In Ruby files, use 2 spaces instead of 4 for tabs
-"autocmd FileType ruby setlocal sw=2 ts=2 sts=2
+call vundle#end()            
+filetype plugin indent on   
 
-" Enable omnicompletion (to use, hold Ctrl+X then Ctrl+O while in Insert mode.
-"set ofu=syntaxcomplete#Complete
+syntax enable
+set t_Co=256
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 03. Theme/Colors                                                           "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set t_Co=256              " enable 256-color mode.
-syntax enable             " enable syntax highlighting (previously syntax on).
-let g:solarized_termcolors=16
-colorscheme solarized     " set colorscheme
 
-" Prettify JSON files
-"autocmd BufRead,BufNewFile *.json set filetype=json
-"autocmd Syntax json sou ~/.vim/syntax/json.vim
 
-" Prettify Vagrantfile
-"autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
 
-" Prettify Markdown files
-"augroup markdown
- " au!
- " au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
-"augroup END
+set hidden
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 04. Vim UI                                                                 "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set number                " show line numbers
-set numberwidth=6         " make the number gutter 6 characters wide
-set cul                   " highlight current line
-set laststatus=2          " last window always has a statusline
-set nohlsearch            " Don't continue to highlight searched phrases.
-set incsearch             " But do highlight as you type your search.
-set ignorecase            " Make searches case-insensitive.
-set ruler                 " Always show info along bottom.
-set showmatch
-set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
+set wildmenu
+set showcmd
+
+set ignorecase
+set smartcase
+set backspace=indent,eol,start
+
+set autoindent
+set nostartofline
+
+set confirm
 set visualbell
+set t_vb=
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 05. Text Formatting/Layout                                                 "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set autoindent            " auto-indent
-set tabstop=2             " tab spacing
-set softtabstop=2         " unify
-set shiftwidth=2          " indent/outdent by 2 columns
-set shiftround            " always indent/outdent to the nearest tabstop
-set expandtab             " use spaces instead of tabs
-set smartindent           " automatically insert one extra level of indentation
-set smarttab              " use tabs at the start of a line, spaces elsewhere
-set nowrap                " don't wrap text
 
-set lazyredraw          " redraw only when we need to.
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 06. Custom Commands                                                        "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set expandtab
+set shiftwidth=2
+set softtabstop=2
 
-" Prettify JSON files making them easier to read
-"command PrettyJSON %!python -m json.tool
+autocmd VimEnter * command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>, '', <bang>0)
+
+nnoremap ;  :FZF <CR>
+
+
+
+nnoremap <C-o> :NERDTreeToggle<CR>
+nnoremap gn :tabedit<CR>
+nnoremap gb :tabclose<CR>
+
+
+
+command PrettyJSON %!python -m json.tool
+
+
+
+
