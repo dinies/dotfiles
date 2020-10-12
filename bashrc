@@ -125,3 +125,12 @@ function setzoom() { gsettings set org.gnome.desktop.interface text-scaling-fact
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Cuda Toolkit config 
+export PATH=$PATH:/usr/local/cuda/bin
+export CUDADIR=/usr/local/cuda
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
+
+
+# RoboDart 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/usr_local/lib:/usr/local/lib
