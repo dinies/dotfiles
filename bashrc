@@ -132,5 +132,14 @@ export CUDADIR=/usr/local/cuda
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64
 
 
-# RoboDart 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/usr_local/lib:/usr/local/lib
+# RoboDart and inria wbc
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/usr_local/lib:/usr/local/lib:/data/install/lib:/usr/lib:usr/lib/x86_64-linux-gnu
+
+# ROS melodic
+source /opt/ros/melodic/setup.bash
+alias cm='catkin_make'
+# source a catkin ws
+wssource() {
+  source $1/devel/setup.bash
+}
+
