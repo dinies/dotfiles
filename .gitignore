@@ -1,5 +1,4 @@
 oh-my-zsh/
-chef/
 private
 vim/bundle/
 !vim/bundle/.gitkeep
@@ -9,5 +8,3 @@ vim/.undo/
 !vim/.undo/.gitkeep
 vim/.backup/
 !vim/.backup/.gitkeep
-vim/.netrwhist
-
