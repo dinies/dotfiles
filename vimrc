@@ -1,17 +1,20 @@
 set nocompatible
+set encoding=utf-8
 
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'itchyny/lightline.vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-eunuch'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'edkolev/tmuxline.vim'
 
 call vundle#end()            
 filetype plugin indent on   
@@ -19,6 +22,7 @@ filetype plugin indent on
 syntax enable
 set t_Co=256
 
+set statusline+=%F
 
 
 
@@ -64,5 +68,8 @@ nnoremap gb :tabclose<CR>
 command PrettyJSON %!python -m json.tool
 
 
+
+let g:airline_theme='solarized'
+let g:tmuxline_powerline_separators=0
 
 

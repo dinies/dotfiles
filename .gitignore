@@ -1,5 +1,13 @@
 oh-my-zsh/
-vim/vim
-vim/.netrwhist
 chef/
 private
+vim/bundle/
+!vim/bundle/.gitkeep
+vim/.swp/
+!vim/.swp/.gitkeep
+vim/.undo/
+!vim/.undo/.gitkeep
+vim/.backup/
+!vim/.backup/.gitkeep
+vim/.netrwhist
+
