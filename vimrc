@@ -1,4 +1,5 @@
 set nocompatible
+set encoding=utf-8
 
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -20,6 +21,7 @@ filetype plugin indent on
 syntax enable
 set t_Co=256
 
+set statusline+=%F
 
 
 
@@ -66,6 +68,9 @@ command PrettyJSON %!python -m json.tool
 
 let g:ycm_show_diagnostics_ui = 0
 
+
+let g:airline_theme='solarized'
+let g:tmuxline_powerline_separators=0
 
 
 
