@@ -8,3 +8,4 @@ vim/.undo/*
 !vim/.undo/.gitkeep
 vim/.backup/*
 !vim/.backup/.gitkeep
+vim/.netrwhist
