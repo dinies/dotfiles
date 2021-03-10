@@ -1,5 +1,4 @@
 oh-my-zsh/
-private
 vim/.netrwhist
 vim/bundle/*
 !vim/bundle/.gitkeep
