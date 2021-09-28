@@ -72,3 +72,5 @@ let g:airline_theme='solarized'
 let g:tmuxline_powerline_separators=0
 
 
+map <C-K> :py3f  /usr/share/clang/clang-format-6.0/clang-format.py<cr>
+imap <C-K> <c-o>:py3f /usr/share/clang/clang-format-6.0/clang-format.py<cr>
