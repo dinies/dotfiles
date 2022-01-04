@@ -138,8 +138,12 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/usr_local/lib:/usr/local/lib:/data
 # ROS melodic
 source /opt/ros/melodic/setup.bash
 alias cm='catkin_make'
+alias cmtb='catkin_make tests'
+alias cmt='catkin_make test'
 # source a catkin ws
 wssource() {
   source $1/devel/setup.bash
 }
 
+#export ROS_MASTER_URI=http://jupiter:11311
+#export ROS_IP=jupiter
