@@ -10,3 +10,4 @@ ln -s dotfiles/gdbinit .gdbinit
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
+sed  -i 's/<C-o> :NERDTreeToggle<CR>/<C-p> :NERDTreeToggle<CR>/g' dotfiles/vimrc
