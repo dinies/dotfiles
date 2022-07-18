@@ -58,7 +58,7 @@ nnoremap ;  :FZF <CR>
 
 
 
-nnoremap <C-o> :NERDTreeToggle<CR>
+nnoremap <C-b> :NERDTreeToggle<CR>
 nnoremap gn :tabedit<CR>
 nnoremap gb :tabclose<CR>
 
