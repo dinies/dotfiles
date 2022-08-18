@@ -75,3 +75,6 @@ let g:tmuxline_powerline_separators=0
 map <C-K> :py3f  /usr/share/clang/clang-format-13/clang-format.py<cr>
 imap <C-K> <c-o>:py3f /usr/share/clang/clang-format-13/clang-format.py<cr>
 
+" Paste from X CLIPBOARD
+map <leader>pb :r!xsel --clipboard<CR>
+
