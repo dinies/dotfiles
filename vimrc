@@ -21,6 +21,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'kuznetsss/shswitch'
+Plugin 'majutsushi/tagbar'
 
 call vundle#end()            
 filetype plugin indent on   
@@ -71,6 +72,7 @@ nnoremap gb :tabclose<CR>
 
 
 nnoremap gs :SHSwitch<CR>
+nnoremap gz :TagbarToggle<CR>
 
 
 " Auto generate tags file on file write of *.c *.cpp *.h *.hpp files
