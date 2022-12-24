@@ -11,9 +11,11 @@ Plugin 'junegunn/fzf'
 Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-commentary'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
+Plugin 'kuznetsss/shswitch'
 
 call vundle#end()            
 filetype plugin indent on   
@@ -61,6 +63,10 @@ nnoremap ;  :FZF <CR>
 nnoremap <C-b> :NERDTreeToggle<CR>
 nnoremap gn :tabedit<CR>
 nnoremap gb :tabclose<CR>
+
+
+nnoremap gs :SHSwitch<CR>
+
 
 
 
