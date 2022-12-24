@@ -27,6 +27,8 @@ Plugin 'kuznetsss/shswitch'
 Plugin 'majutsushi/tagbar'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'kien/ctrlp.vim'
+
 
 call vundle#end()            
 filetype plugin indent on   
@@ -83,8 +85,7 @@ nnoremap gz :TagbarToggle<CR>
 " Auto generate tags file on file write of *.c *.cpp *.h *.hpp files
 autocmd BufWritePost *.c,*.cpp,*.h,*.hpp silent! !ctags . &
 
-
-command PrettyJSON %!python -m json.tool
+command! PrettyJSON %!python -m json.tool
 
 let g:ycm_show_diagnostics_ui = 0
 
@@ -97,4 +98,22 @@ imap <C-K> <c-o>:py3f /usr/share/clang/clang-format-13/clang-format.py<cr>
 
 " Paste from X CLIPBOARD leader is \
 map <leader>pb :r!xsel --clipboard<CR>
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  set grepformat=%f:%l:%c%m
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" bind F (backward slash) to grep shortcut
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap F :Ag<SPACE>
 
