@@ -1,6 +1,11 @@
 set nocompatible
 set encoding=utf-8
 
+" USEFUL SHORTCUTS
+" Ctags: Ctrl + ]   --> go to tag
+" Ctags: Ctrl + w }   Ctrl + wz --> open/close tag location in side panel
+" Ctags: :tn :tp --> jump to next/previous tag
+
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -68,6 +73,8 @@ nnoremap gb :tabclose<CR>
 nnoremap gs :SHSwitch<CR>
 
 
+" Auto generate tags file on file write of *.c *.cpp *.h *.hpp files
+autocmd BufWritePost *.c,*.cpp,*.h,*.hpp silent! !ctags . &
 
 
 command PrettyJSON %!python -m json.tool
@@ -81,6 +88,6 @@ let g:tmuxline_powerline_separators=0
 map <C-K> :py3f  /usr/share/clang/clang-format-13/clang-format.py<cr>
 imap <C-K> <c-o>:py3f /usr/share/clang/clang-format-13/clang-format.py<cr>
 
-" Paste from X CLIPBOARD
+" Paste from X CLIPBOARD leader is \
 map <leader>pb :r!xsel --clipboard<CR>
 

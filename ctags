@@ -1,0 +1,11 @@
+
+--recurse=yes
+--exclude=.git
+--exclude=build*
+--exclude=\*.swp
+--exclude=\*.bak
+--exclude=\*.pyc
+--exclude=\*.class
+--exclude=\*.cache
+--exclude=\*.dll
+--exclude=\*.pdb
