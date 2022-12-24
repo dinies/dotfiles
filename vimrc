@@ -6,6 +6,9 @@ set encoding=utf-8
 " Ctags: Ctrl + w }   Ctrl + wz --> open/close tag location in side panel
 " Ctags: :tn :tp --> jump to next/previous tag
 
+" Markdown (tabular and vim-markdown) see link
+" https://vimawesome.com/plugin/markdown-syntax 
+
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -22,6 +25,8 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'kuznetsss/shswitch'
 Plugin 'majutsushi/tagbar'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 call vundle#end()            
 filetype plugin indent on   
