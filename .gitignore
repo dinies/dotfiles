@@ -8,3 +8,5 @@ vim/.undo/*
 !vim/.undo/.gitkeep
 vim/.backup/*
 !vim/.backup/.gitkeep
+vim/undodir/*
+!vim/undodir/.gitkeep
