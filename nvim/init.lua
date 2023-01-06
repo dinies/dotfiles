@@ -48,7 +48,12 @@ require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
-  
+
+  -- Harpoon
+  use('theprimeagen/harpoon')
+  --Undotree
+  use('mbbill/undotree')
+  use('terrortylor/nvim-comment')
   use 'overcache/NeoSolarized'
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
@@ -96,31 +101,52 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
--- Set highlight on search
-vim.o.hlsearch = false
-
--- Make line numbers default
-vim.wo.number = true
-
 -- Enable mouse mode
-vim.o.mouse = 'a'
+vim.opt.mouse = 'a'
+
+-- Share clipboard
+vim.opt.clipboard = 'unnamedplus'
 
 -- Enable break indent
-vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
+vim.opt.breakindent = true
 
 -- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
--- Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
+-- Make cursor big also in insert mode
+vim.opt.guicursor = ""
+
+vim.opt.nu = true
+vim.opt.relativenumber = true
+
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+vim.opt.smartindent = true
+
+vim.opt.wrap = false
+
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
+
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+
+
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.isfname:append("@-@")
+
+vim.opt.updatetime = 50
+vim.opt.colorcolumn = "80"
 
 -- Set colorscheme
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 vim.cmd [[
   set background=dark
   colorscheme NeoSolarized
@@ -139,10 +165,56 @@ vim.g.maplocalleader = ' '
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set( 'n', "<leader>pv" , vim.cmd.Ex )
+vim.keymap.set("i", "<C-c>", "<Esc>")
+vim.keymap.set("n", "q", "<nop>")
+
+-- Bring lines up and down
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- Keep cursor still when joining, jumping and finding
+vim.keymap.set("n", "J", "mzJ`z")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
+-- Avoids that yanked buffer updates when printing on top of another word
+vim.keymap.set("x", "<leader>p", [["_dP]])
+
+-- Navigation in quick fix list
+vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+
+-- replace the word under the cursor in the buffer
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Harpoon config
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+vim.keymap.set("n", "<leader>ah", mark.add_file)
+vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+vim.keymap.set("n", "<C-h>", function() ui.nav_file(1) end)
+vim.keymap.set("n", "<C-j>", function() ui.nav_file(2) end)
+vim.keymap.set("n", "<C-k>", function() ui.nav_file(3) end)
+vim.keymap.set("n", "<C-l>", function() ui.nav_file(4) end)
+
+-- Undotreeconfig
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
+-- Fugitive
+vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+
+-- Comment
+
+require('nvim_comment').setup({comment_empty = false})
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -160,11 +232,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'auto',
+    theme = 'solarized_dark',
     component_separators = '|',
     section_separators = '',
   },
 }
+
 
 -- Enable Comment.nvim
 require('Comment').setup()
@@ -216,6 +289,7 @@ vim.keymap.set('n', '<leader>/', function()
 end, { desc = '[/] Fuzzily search in current buffer]' })
 
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sp', require('telescope.builtin').git_files, { desc = '[S]earch files in a Git indexed [P]roject' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
@@ -227,7 +301,10 @@ require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim' },
 
-  highlight = { enable = true },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
@@ -341,7 +418,7 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- clangd = {},
+  clangd = {},
   -- gopls = {},
   -- pyright = {},
   -- rust_analyzer = {},
