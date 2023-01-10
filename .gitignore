@@ -10,3 +10,4 @@ vim/.backup/*
 !vim/.backup/.gitkeep
 vim/undodir/*
 !vim/undodir/.gitkeep
+nvim/plugin/packer_compiled.lua
