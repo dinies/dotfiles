@@ -166,7 +166,7 @@ vim.g.maplocalleader = ' '
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set( 'n', "<leader>pv" , vim.cmd.Ex )
 vim.keymap.set("i", "<C-c>", "<Esc>")
-vim.keymap.set("n", "q", "<nop>")
+vim.keymap.set("n", "Q", "<nop>")
 
 -- Bring lines up and down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
