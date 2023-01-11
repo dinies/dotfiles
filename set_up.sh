@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+#Utilities
+sudo apt install -y vim xsel unzip ripgresp locate gdb tree tmux cmake-curses-gui
+
 cd ~
 rm -rf .vim
 ln -s dotfiles/vim .vim
@@ -26,7 +29,6 @@ wget  https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
 sudo apt install ./nvim-linux64.deb
 rm ./nvim-linux64.deb
 
-sudo apt install -y xsel unzip 
 mkdir -p ~/.config/
 ln -s ~/dotfiles/nvim .config/nvim
 
