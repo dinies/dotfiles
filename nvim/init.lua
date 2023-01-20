@@ -195,6 +195,12 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Harpoon config
+require("harpoon").setup({
+    menu = {
+        width = vim.api.nvim_win_get_width(0) - 30,
+        height = vim.api.nvim_win_get_height(0) - 30,
+    }
+})
 local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
 vim.keymap.set("n", "<leader>ah", mark.add_file)
