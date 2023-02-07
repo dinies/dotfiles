@@ -20,7 +20,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-commentary'
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'edkolev/tmuxline.vim'
 Plugin 'kuznetsss/shswitch'
 Plugin 'majutsushi/tagbar'
@@ -92,7 +91,6 @@ command! PrettyJSON %!python -m json.tool
 let g:ycm_show_diagnostics_ui = 0
 
 
-let g:airline_theme='solarized'
 let g:tmuxline_powerline_separators=0
 
 map <C-K> :py3f  /usr/share/clang/clang-format-13/clang-format.py<cr>
