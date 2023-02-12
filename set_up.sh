@@ -2,9 +2,12 @@
 set -e
 
 #Utilities
-sudo apt install -y vim xsel unzip ripgrep locate gdb tree tmux cmake-curses-gui
+sudo apt install -y \
+  vim xsel unzip ripgrep \
+  locate gdb tree tmux \
+  cmake-curses-gui wget
 
-cd ~
+cd /home/$USERNAME
 
 # VIM
 rm -rf .vim
@@ -12,6 +15,9 @@ ln -s dotfiles/vim .vim
 ln -s dotfiles/vimrc .vimrc
 #requires installing exuberant-ctags package
 ln -s dotfiles/ctags .ctags 
+ls -la dotfiles
+ls -la
+ls -la .vim/bundle
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 
