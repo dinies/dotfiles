@@ -53,7 +53,6 @@ require('packer').startup(function(use)
     --Undotree
     use('mbbill/undotree')
     use('terrortylor/nvim-comment')
-    use 'overcache/NeoSolarized'
     use 'nvim-lualine/lualine.nvim' -- Fancier statusline
     use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
     use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -143,12 +142,6 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
--- Set colorscheme
-vim.opt.termguicolors = true
-vim.cmd [[
-  set background=dark
-  colorscheme NeoSolarized
-]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
