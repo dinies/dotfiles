@@ -18,3 +18,21 @@ and to have the option to change colorsheme instantaneously
 we are using Kitty terminal instad the default GNOME terminal.
 Follow this [start-up guide](here: https://sw.kovidgoyal.net/kitty/binary/)
 We are using this [Kitty coloschemes](https://github.com/dexpota/kitty-themes)
+
+Finally remember to add to .config/kitti/ a kitti.conf file containing:
+```
+include ./theme.conf
+allow_remote_control yes
+```
+And optionally, to .bashrc:
+```
+col(){
+    kitty @ set-colors -a "~/.config/kitty/kitty-themes/themes/$1.conf"
+}
+listcol(){
+  ls ~/.config/kitty/kitty-themes/themes/
+}
+dsa(){
+docker start "$1" && docker attach "$1"
+}
+```
