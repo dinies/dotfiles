@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+sudo apt remove -y neovim
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
+
 #Utilities
 sudo apt update &&
   sudo  apt install -y \
@@ -28,7 +31,7 @@ ln -sf dotfiles/stl-views.gdb .stl-views.gdb
 # NEOVIM
 mkdir -p .config/
 rm -rf .config/nvim
-ln -sf dotfiles/nvim .config/nvim
+ln -sf ~/dotfiles/nvim .config/nvim
 
 ## TMUX
 ln -sf dotfiles/tmux.conf .tmux.conf
