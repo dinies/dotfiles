@@ -27,6 +27,7 @@ ln -sf dotfiles/stl-views.gdb .stl-views.gdb
 
 # NEOVIM
 mkdir -p .config/
+rm -rf .config/nvim
 ln -sf dotfiles/nvim .config/nvim
 
 ## TMUX

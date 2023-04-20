@@ -23,6 +23,7 @@ Finally remember to add to .config/kitti/ a kitti.conf file containing:
 ```
 include ./theme.conf
 allow_remote_control yes
+enable_audio_bell no
 ```
 And optionally, to .bashrc:
 ```
