@@ -9,6 +9,7 @@ ENV DISPLAY :0
 
 RUN apt-get update && \
   apt-get install -qqy --no-install-recommends \
+  software-properties-common build-essential \
   sudo git keyboard-configuration tzdata
 
 # RUN echo "tzdata tzdata/Areas select Europe" | debconf-set-selections &&\
