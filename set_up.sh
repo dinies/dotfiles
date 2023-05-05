@@ -18,7 +18,7 @@ rm -rf .vim
 ln -sf dotfiles/vim .vim
 ln -sf dotfiles/vimrc .vimrc
 #requires installing exuberant-ctags package
-ln -sf dotfiles/ctags .ctags 
+ln -sf dotfiles/ctags .ctags
 rm -rf .vim/bundle/Vundle.vim
 git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
 vim +PluginInstall +qall
@@ -31,6 +31,7 @@ ln -sf dotfiles/stl-views.gdb .stl-views.gdb
 # NEOVIM
 mkdir -p .config/
 rm -rf .config/nvim
+rm -rf .local/share/nvim
 ln -sf ~/dotfiles/nvim .config/nvim
 
 ## TMUX
