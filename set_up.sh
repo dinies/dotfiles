@@ -40,5 +40,4 @@ git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm
 
 echo 'export VISUAL=nvim' >> .bashrc
 echo 'export EDITOR="$VISUAL"' >> .bashrc
-echo 'export TERM=xterm-256color' >> .bashrc
 source .bashrc
