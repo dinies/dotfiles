@@ -26,7 +26,6 @@ return {
             local lsp = require('lsp-zero').preset("recommended")
 
             lsp.ensure_installed({
-                'lua-language-server',
                 'rust_analyzer',
                 'clangd',
             })
