@@ -3,8 +3,8 @@ return {
     version = false,
     event = { "BufReadPre", "BufNewFile" },
     opts = {
-        -- symbol = "▏",
-        symbol = "│",
+        -- symbol = ".",
+        symbol = ".",
         options = { try_as_border = true },
     },
     init = function()
