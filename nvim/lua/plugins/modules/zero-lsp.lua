@@ -27,6 +27,7 @@ return {
 
             lsp.ensure_installed({
                 'rust_analyzer',
+                'lua_ls',
                 'clangd',
             })
             lsp.on_attach(function(client, bufnr)
