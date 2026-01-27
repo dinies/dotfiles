@@ -24,6 +24,10 @@ Finally remember to add to .config/kitti/ a kitti.conf file containing:
 include ./theme.conf
 allow_remote_control yes
 enable_audio_bell no
+font_family FiraCode-SemiBold
+
+clipboard_control write-clipboard write-primary read-clipboard read-primary
+paste_actions no-op
 ```
 And optionally, to .bashrc:
 ```

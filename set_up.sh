@@ -1,6 +1,22 @@
 #!/bin/bash
 set -e
 
+echo 'Setup script started'
+if ! grep -qi ubuntu /etc/os-release; then
+  echo "This script is intended for Ubuntu containers."
+fi
+
+LOCALE="C.UTF-8"
+
+# Persist locale system-wide
+sudo tee /etc/default/locale >/dev/null <<EOF
+LANG=${LOCALE}
+LC_ALL=${LOCALE}
+EOF
+
+export LANG="${LOCALE}"
+export LC_ALL="${LOCALE}"
+
 sudo apt remove -y neovim
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 
@@ -41,4 +57,6 @@ git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm
 
 echo 'export VISUAL=nvim' >> .bashrc
 echo 'export EDITOR="$VISUAL"' >> .bashrc
+
+echo 'Setup script finished succesfully'
 source .bashrc
