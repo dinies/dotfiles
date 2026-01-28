@@ -27,7 +27,7 @@ sudo apt update &&
 
 sudo apt remove -y neovim
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
-sudo apt update && sudo  apt install -y nvim
+sudo apt update && sudo  apt install -y neovim
 
 
 # VIM
