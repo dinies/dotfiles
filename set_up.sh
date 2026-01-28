@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e
+
+set -euxo pipefail
 
 echo 'Setup script started'
 if ! grep -qi ubuntu /etc/os-release; then
@@ -17,46 +18,45 @@ EOF
 export LANG="${LOCALE}"
 export LC_ALL="${LOCALE}"
 
-sudo apt remove -y neovim
-sudo add-apt-repository -y ppa:neovim-ppa/unstable
-
-#Utilities
 sudo apt update &&
-  sudo  apt install -y \
-  vim neovim xsel unzip ripgrep \
+  sudo apt install -y \
+  software-properties-common \
+  vim xsel unzip ripgrep \
   locate gdb tree tmux \
   cmake-curses-gui wget
 
-cd /home/$USERNAME
+sudo apt remove -y neovim
+sudo add-apt-repository -y ppa:neovim-ppa/unstable
+sudo apt update && sudo  apt install -y nvim
+
 
 # VIM
-rm -rf .vim
-ln -sf dotfiles/vim .vim
-ln -sf dotfiles/vimrc .vimrc
+rm -rf "$HOME/.vim"
+ln -sf "$HOME/dotfiles/vim" "$HOME/.vim"
+ln -sf "$HOME/dotfiles/vimrc" "$HOME/.vimrc"
 #requires installing exuberant-ctags package
-ln -sf dotfiles/ctags .ctags
-rm -rf .vim/bundle/Vundle.vim
-git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
+ln -sf "$HOME/dotfiles/ctags" "$HOME/.ctags"
+rm -rf "$HOME/.vim/bundle/Vundle.vim"
+git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
 vim +PluginInstall +qall
 
-
 #GDB
-ln -sf dotfiles/gdbinit .gdbinit
-ln -sf dotfiles/stl-views.gdb .stl-views.gdb
+ln -sf "$HOME/dotfiles/gdbinit" "$HOME/.gdbinit"
+ln -sf "$HOME/dotfiles/stl-views.gdb" "$HOME/.stl-views.gdb"
 
 # NEOVIM
-mkdir -p .config/
-rm -rf .config/nvim
-rm -rf .local/share/nvim
-ln -sf ~/dotfiles/nvim .config/nvim
+mkdir -p "$HOME/.config/"
+rm -rf "$HOME/.config/nvim"
+rm -rf "$HOME/.local/share/nvim"
+ln -sf "$HOME/dotfiles/nvim" "$HOME/.config/nvim"
 
 ## TMUX
-ln -sf dotfiles/tmux.conf .tmux.conf
-rm -rf .tmux/plugins/tpm
-git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm
+ln -sf "$HOME/dotfiles/tmux.conf" "$HOME/.tmux.conf"
+rm -rf "$HOME/.tmux/plugins/tpm"
+git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 
-echo 'export VISUAL=nvim' >> .bashrc
-echo 'export EDITOR="$VISUAL"' >> .bashrc
+echo 'export VISUAL=nvim' >> "$HOME/.bashrc"
+echo 'export EDITOR="$VISUAL"' >> "$HOME/.bashrc"
 
 echo 'Setup script finished succesfully'
-source .bashrc
+source "$HOME/.bashrc"
