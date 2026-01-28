@@ -21,6 +21,7 @@ export LC_ALL="${LOCALE}"
 sudo apt update &&
   sudo apt install -y \
   software-properties-common \
+  build-essentials \
   vim xsel unzip ripgrep \
   locate gdb tree tmux \
   cmake-curses-gui wget
