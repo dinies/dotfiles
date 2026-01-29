@@ -325,11 +325,31 @@ require("which-key").setup({
 -- INFO: utility plugins
 vim.pack.add({
 	"https://github.com/windwp/nvim-autopairs", -- auto pairs
-	"https://github.com/folke/todo-comments.nvim", -- highlight TODO/INFO/WARN comments
+  "https://github.com/folke/todo-comments.nvim", -- highlight TODO/INFO/WARN comments
+  {src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2"},
 }, { confirm = false })
 
 require("nvim-autopairs").setup()
 require("todo-comments").setup()
+
+local harpoon = require("harpoon")
+harpoon:setup()
+
+vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end,
+  { desc = "Harpoon add file "})
+vim.keymap.set("n", "<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+  { desc = "Harpoon show list"})
+
+for i = 1, 9 do
+  vim.keymap.set("n", "<leader>h"..i, function() harpoon:list():select(i) end,
+    { desc = "select file n."..i})
+end
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end,
+  { desc = "previous file"})
+vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end,
+  { desc = "next file"})
 
 -- uncomment to enable automatic plugin updates
 -- vim.pack.update()
