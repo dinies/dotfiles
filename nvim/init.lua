@@ -44,6 +44,8 @@
 -- this configuration is only a starting point/reference. it is expected that
 -- the user will change the configuration to suit their needs.
 
+vim.opt.runtimepath:prepend(vim.fn.stdpath("data") .. "/site")
+
 -- INFO: options
 -- these change the default neovim behaviours using the 'vim.opt' API.
 -- see `:h vim.opt` for more details.
@@ -156,30 +158,42 @@ vim.pack.add({ "https://github.com/rebelot/kanagawa.nvim" }, { confirm = false }
 vim.cmd.colorscheme("kanagawa")
 
 -- INFO: formatting and syntax highlighting
-vim.pack.add({ "https://github.com/nvim-treesitter/nvim-treesitter" }, { confirm = false })
-
--- equivalent to :TSUpdate
-require("nvim-treesitter.install").update("all")
-
-require("nvim-treesitter.configs").setup({
-	sync_install = true,
-
-	modules = {},
-	ignore_install = {},
-
-	ensure_installed = {
-		"lua",
-		"c",
-		"rust",
-		"go",
-	},
-
-	auto_install = true, -- autoinstall languages that are not installed yet
-
-	highlight = {
-		enable = true,
+vim.pack.add({
+	{
+		src = "https://github.com/nvim-treesitter/nvim-treesitter",
+		-- The 'build' key ensures parsers update when the plugin updates
+		build = ":TSUpdate",
 	},
 })
+
+-- Guard the configuration so it doesn't error out during the first install
+local ok, ts_config = pcall(require, "nvim-treesitter.config")
+if ok then
+	ts_config.setup({
+		-- Use the standard Neovim data directory
+		install_dir = vim.fn.stdpath("data") .. "/site",
+		ensure_installed = {
+			"lua",
+			"vim",
+			"dockerfile",
+			"yaml",
+			"cpp",
+			"bash",
+			"markdown",
+			"markdown_inline",
+			"rust",
+			"json",
+			"toml",
+			"python",
+		},
+		auto_install = true,
+		highlight = { enable = true },
+		indent = { enable = true },
+	})
+else
+	-- Optional: Notify that setup is deferred until the next restart
+	vim.notify("Treesitter downloading... Restart Neovim to complete setup.", vim.log.levels.INFO)
+end
 
 -- INFO: completion engine
 vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
@@ -226,7 +240,6 @@ local lsp_servers = {
 	},
 	clangd = {},
 	rust_analyzer = {},
-	gopls = {},
 }
 
 vim.pack.add({
