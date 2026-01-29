@@ -5,6 +5,9 @@ SHELL [ "/bin/bash" , "-c" ]
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY :0
 
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
 RUN apt-get update && \
     apt-get install -qqy \
         sudo \

@@ -7,21 +7,10 @@ if ! grep -qi ubuntu /etc/os-release; then
   echo "This script is intended for Ubuntu containers."
 fi
 
-LOCALE="C.UTF-8"
-
-# Persist locale system-wide
-sudo tee /etc/default/locale >/dev/null <<EOF
-LANG=${LOCALE}
-LC_ALL=${LOCALE}
-EOF
-
-export LANG="${LOCALE}"
-export LC_ALL="${LOCALE}"
-
 sudo apt update &&
   sudo apt install -y \
   software-properties-common \
-  build-essentials \
+  build-essential \
   vim xsel unzip ripgrep \
   locate gdb tree tmux \
   cmake-curses-gui wget
