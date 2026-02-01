@@ -12,6 +12,6 @@ nvim/plugin/packer_compiled.lua
 vim/.netrwhist
 
 # Ignore the downloaded plugin files
-pack/plugins/start/*
+nvim/pack/plugins/start/*
 # But keep the directory structure if you want
-!pack/plugins/start/.keep
+!nvim/pack/plugins/start/.keep
