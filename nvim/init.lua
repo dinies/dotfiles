@@ -46,6 +46,36 @@
 
 vim.opt.runtimepath:prepend(vim.fn.stdpath("data") .. "/site")
 
+local function setup_cmp_packages()
+  local pack_path = vim.fn.stdpath('config') .. '/pack/plugins/start/'
+  -- List of required repositories: { folder_name, git_url }
+  local plugins = {
+    { "nvim-cmp",     "https://github.com/hrsh7th/nvim-cmp" },
+    { "cmp-nvim-lsp", "https://github.com/hrsh7th/cmp-nvim-lsp" },
+    { "cmp-buffer",   "https://github.com/hrsh7th/cmp-buffer" },
+    { "cmp-path",     "https://github.com/hrsh7th/cmp-path" },
+    { "LuaSnip",      "https://github.com/L3MON4D3/LuaSnip" },
+    { "cmp_luasnip",  "https://github.com/saadparwaiz1/cmp_luasnip" },
+  }
+
+  local installed_any = false
+  for _, plugin in ipairs(plugins) do
+    local name, url = plugin[1], plugin[2]
+    local path = pack_path .. name
+    if vim.fn.empty(vim.fn.glob(path)) > 0 then
+      print("Installing " .. name .. "...")
+      vim.fn.system({ 'git', 'clone', '--depth', '1', url, path })
+      installed_any = true
+    end
+  end
+
+  if installed_any then
+    print("Installation complete. Restart Neovim!")
+  end
+end
+
+setup_cmp_packages()
+
 -- INFO: options
 -- these change the default neovim behaviours using the 'vim.opt' API.
 -- see `:h vim.opt` for more details.
@@ -124,15 +154,15 @@ vim.opt.expandtab = true
 vim.opt.textwidth = 80
 
 vim.diagnostic.config({
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = " ",
-			[vim.diagnostic.severity.WARN] = " ",
-			[vim.diagnostic.severity.INFO] = " ",
-			[vim.diagnostic.severity.HINT] = " ",
-		},
-	},
-	virtual_text = true, -- show inline diagnostics
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
+  },
+  virtual_text = true, -- show inline diagnostics
 })
 
 -- clear search highlights with <Esc>
@@ -159,121 +189,167 @@ vim.cmd.colorscheme("kanagawa")
 
 -- INFO: formatting and syntax highlighting
 vim.pack.add({
-	{
-		src = "https://github.com/nvim-treesitter/nvim-treesitter",
-		-- The 'build' key ensures parsers update when the plugin updates
-		build = ":TSUpdate",
-	},
+  {
+    src = "https://github.com/nvim-treesitter/nvim-treesitter",
+    -- The 'build' key ensures parsers update when the plugin updates
+    build = ":TSUpdate",
+  },
 })
 
 -- Guard the configuration so it doesn't error out during the first install
 local ok, ts_config = pcall(require, "nvim-treesitter.config")
 if ok then
-	ts_config.setup({
-		-- Use the standard Neovim data directory
-		install_dir = vim.fn.stdpath("data") .. "/site",
-		ensure_installed = {
-			"lua",
-			"vim",
-			"dockerfile",
-			"yaml",
-			"cpp",
-			"bash",
-			"markdown",
-			"markdown_inline",
-			"rust",
-			"json",
-			"toml",
-			"python",
-		},
-		auto_install = true,
-		highlight = { enable = true },
-		indent = { enable = true },
-	})
+  ts_config.setup({
+    -- Use the standard Neovim data directory
+    install_dir = vim.fn.stdpath("data") .. "/site",
+    ensure_installed = {
+      "lua",
+      "vim",
+      "dockerfile",
+      "yaml",
+      "cpp",
+      "bash",
+      "markdown",
+      "markdown_inline",
+      "rust",
+      "json",
+      "toml",
+      "python",
+    },
+    auto_install = true,
+    highlight = { enable = true },
+    indent = { enable = true },
+  })
 else
-	-- Optional: Notify that setup is deferred until the next restart
-	vim.notify("Treesitter downloading... Restart Neovim to complete setup.", vim.log.levels.INFO)
+  -- Optional: Notify that setup is deferred until the next restart
+  vim.notify("Treesitter downloading... Restart Neovim to complete setup.", vim.log.levels.INFO)
 end
 
--- INFO: completion engine
-vim.pack.add({ "https://github.com/saghen/blink.cmp" }, { confirm = false })
-
-require("blink.cmp").setup({
-	completion = {
-		documentation = {
-			auto_show = true,
-		},
-	},
-
-	keymap = {
-		["<C-n>"] = { "select_next", "fallback_to_mappings" },
-		["<C-p>"] = { "select_prev", "fallback_to_mappings" },
-		["<C-y>"] = { "select_and_accept", "fallback" },
-		["<C-e>"] = { "cancel", "fallback" },
-
-		["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
-		["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
-		["<CR>"] = { "select_and_accept", "fallback" },
-		["<Esc>"] = { "cancel", "hide_documentation", "fallback" },
-
-		["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-
-		["<C-b>"] = { "scroll_documentation_up", "fallback" },
-		["<C-f>"] = { "scroll_documentation_down", "fallback" },
-
-		["<C-k>"] = { "show_signature", "hide_signature", "fallback" },
-	},
-
-	fuzzy = {
-		implementation = "lua",
-	},
-})
 
 -- INFO: lsp server installation and configuration
 
 -- lsp servers we want to use and their configuration
 -- see `:h lspconfig-all` for available servers and their settings
 local lsp_servers = {
-	lua_ls = {
-		-- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
-		Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) } },
-	},
-	clangd = {},
-	rust_analyzer = {},
+  lua_ls = {
+    -- https://luals.github.io/wiki/settings/ | `:h nvim_get_runtime_file`
+    Lua = { workspace = { library = vim.api.nvim_get_runtime_file("lua", true) } },
+  },
+  clangd = {},
+  rust_analyzer = {},
 }
 
 vim.pack.add({
-	"https://github.com/neovim/nvim-lspconfig", -- default configs for lsps
+  "https://github.com/neovim/nvim-lspconfig", -- default configs for lsps
 
-	-- NOTE: if you'd rather install the lsps through your OS package manager you
-	-- can delete the next three mason-related lines and their setup calls below.
-	-- see `:h lsp-quickstart` for more details.
-	"https://github.com/mason-org/mason.nvim", -- package manager
-	"https://github.com/mason-org/mason-lspconfig.nvim", -- lspconfig bridge
-	"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- auto installer
+  -- NOTE: if you'd rather install the lsps through your OS package manager you
+  -- can delete the next three mason-related lines and their setup calls below.
+  -- see `:h lsp-quickstart` for more details.
+  "https://github.com/mason-org/mason.nvim",                      -- package manager
+  "https://github.com/mason-org/mason-lspconfig.nvim",            -- lspconfig bridge
+  "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- auto installer
 }, { confirm = false })
 
 require("mason").setup()
 require("mason-lspconfig").setup()
 require("mason-tool-installer").setup({
-	ensure_installed = vim.tbl_keys(lsp_servers),
+  ensure_installed = vim.tbl_keys(lsp_servers),
 })
+
+-- nvim-cmp setup
+local cmp = require('cmp')
+local luasnip = require('luasnip')
+
+cmp.setup({
+  snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>']      = cmp.mapping.confirm({ select = true }),
+    ['<Tab>']     = cmp.mapping(function(fallback)
+      if cmp.visible() then cmp.select_next_item() else fallback() end
+    end, { 'i', 's' }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
+  })
+})
+
+-- lsp setup
+-- We define our nvim-cmp capabilities
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- Mason installs binaries here
+local mason_bin = vim.fn.stdpath("data") .. "/mason/bin/"
+
+-- The new 0.12 way to enable servers
+local servers = {
+  lua_ls = {
+    cmd = { mason_bin .. "lua-language-server" },
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' },
+        },
+        workspace = {
+          -- This makes the server aware of Neovim runtime files
+          library = vim.api.nvim_get_runtime_file("", true),
+          checkThirdParty = false,
+        },
+        telemetry = { enable = false },
+      },
+    },
+  },
+  clangd = { cmd = { mason_bin .. "clangd" } },
+  pyright = { cmd = { mason_bin .. "pyright-langserver", "--stdio" } },
+  rust_analyzer = { cmd = { mason_bin .. "rust-analyzer" } },
+}
 
 -- configure each lsp server on the table
 -- to check what clients are attached to the current buffer, use
 -- `:checkhealth vim.lsp`. to view default lsp keybindings, use `:h lsp-defaults`.
-for server, config in pairs(lsp_servers) do
-	vim.lsp.config(server, {
-		settings = config,
-
-		-- only create the keymaps if the server attaches successfully
-		on_attach = function(_, bufnr)
-			vim.keymap.set("n", "grd", vim.lsp.buf.definition, { buffer = bufnr, desc = "vim.lsp.buf.definition()" })
-
-			vim.keymap.set("n", "grf", vim.lsp.buf.format, { buffer = bufnr, desc = "vim.lsp.buf.format()" })
-		end,
-	})
+for name, config in pairs(servers) do
+  vim.lsp.config(name, {
+    cmd = config.cmd,
+    capabilities = capabilities,
+    settings = config.settings or {},
+    root_markers = { ".git", "package.json", "pyproject.toml", "Cargo.toml" },
+  })
+  vim.lsp.enable(name)
 end
+
+-- lsp keybindings
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(event)
+    local function get_opts(keybinding_desc)
+      local opts = { buffer = event.buf }
+      opts["desc"] = keybinding_desc
+      return opts
+    end
+
+    -- Jump to definition
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, get_opts("go to def"))
+    -- Show documentation (Hover)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, get_opts("show docs"))
+    -- Rename symbol across the project
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, get_opts("rename symbol"))
+    -- List code actions (fixes, refactors)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, get_opts("list actions"))
+    -- Go to references
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, get_opts("go to ref"))
+
+    -- Format on save (Optional but popular)
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      buffer = event.buf,
+      callback = function()
+        vim.lsp.buf.format({ bufnr = event.buf, async = false })
+      end,
+    })
+  end,
+})
+
 
 -- NOTE: if all you want is lsp + completion + highlighting, you're done.
 -- the rest of the lines are just quality-of-life/appearance plugins and
@@ -281,9 +357,9 @@ end
 
 -- INFO: fuzzy finder
 vim.pack.add({
-	"https://github.com/nvim-lua/plenary.nvim", -- library dependency
-	"https://github.com/nvim-tree/nvim-web-devicons", -- icons (nerd font)
-	"https://github.com/nvim-telescope/telescope.nvim", -- the fuzzy finder
+  "https://github.com/nvim-lua/plenary.nvim",         -- library dependency
+  "https://github.com/nvim-tree/nvim-web-devicons",   -- icons (nerd font)
+  "https://github.com/nvim-telescope/telescope.nvim", -- the fuzzy finder
 }, { confirm = false })
 
 require("telescope").setup({})
@@ -304,19 +380,19 @@ vim.keymap.set("n", "<leader>sm", pickers.man_pages, { desc = "[S]earch [M]anual
 vim.pack.add({ "https://github.com/nvim-lualine/lualine.nvim" }, { confirm = false })
 
 require("lualine").setup({
-	options = {
-		section_separators = { left = "", right = "" },
-		component_separators = { left = "", right = "" },
-	},
+  options = {
+    section_separators = { left = "", right = "" },
+    component_separators = { left = "", right = "" },
+  },
 })
 
 -- INFO: keybinding helper
 vim.pack.add({ "https://github.com/folke/which-key.nvim" }, { confirm = false })
 
 require("which-key").setup({
-	spec = {
-		{ "<leader>s", group = "[S]earch", icon = { icon = "", color = "green" } },
-	},
+  spec = {
+    { "<leader>s", group = "[S]earch", icon = { icon = "", color = "green" } },
+  },
 })
 
 -- NOTE: there are many more quality-of-life plugins available and others that
@@ -324,9 +400,9 @@ require("which-key").setup({
 
 -- INFO: utility plugins
 vim.pack.add({
-	"https://github.com/windwp/nvim-autopairs", -- auto pairs
+  "https://github.com/windwp/nvim-autopairs",    -- auto pairs
   "https://github.com/folke/todo-comments.nvim", -- highlight TODO/INFO/WARN comments
-  {src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2"},
+  { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
 }, { confirm = false })
 
 require("nvim-autopairs").setup()
@@ -336,20 +412,20 @@ local harpoon = require("harpoon")
 harpoon:setup()
 
 vim.keymap.set("n", "<leader>ha", function() harpoon:list():add() end,
-  { desc = "Harpoon add file "})
+  { desc = "Harpoon add file " })
 vim.keymap.set("n", "<leader>hl", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
-  { desc = "Harpoon show list"})
+  { desc = "Harpoon show list" })
 
 for i = 1, 9 do
-  vim.keymap.set("n", "<leader>h"..i, function() harpoon:list():select(i) end,
-    { desc = "select file n."..i})
+  vim.keymap.set("n", "<leader>h" .. i, function() harpoon:list():select(i) end,
+    { desc = "select file n." .. i })
 end
 
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end,
-  { desc = "previous file"})
+  { desc = "previous file" })
 vim.keymap.set("n", "<leader>hn", function() harpoon:list():next() end,
-  { desc = "next file"})
+  { desc = "next file" })
 
 -- uncomment to enable automatic plugin updates
 -- vim.pack.update()
