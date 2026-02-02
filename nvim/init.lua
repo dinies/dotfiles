@@ -352,6 +352,7 @@ _99.setup({
 vim.keymap.set("n", "<leader>lf", function() _99.fill_in_function_prompt() end, { desc = "99 fill func" })
 vim.keymap.set("n", "<leader>la", function() _99.fill_in_function() end, { desc = "99 fill func" })
 vim.keymap.set("v", "<leader>lv", function() _99.visual_prompt({}) end, { desc = "99 visual" })
+vim.keymap.set("n", "<leader>ls", function() _99.stop_all_requests() end, { desc = "99 stop all" })
 vim.keymap.set("v", "<leader>ls", function() _99.stop_all_requests() end, { desc = "99 stop all" })
 
 -- uncomment to enable automatic plugin updates
