@@ -10,8 +10,3 @@ vim/undodir/*
 !vim/undodir/.gitkeep
 nvim/plugin/packer_compiled.lua
 vim/.netrwhist
-
-# Ignore the downloaded plugin files
-nvim/pack/plugins/start/*
-# But keep the directory structure if you want
-!nvim/pack/plugins/start/.keep
