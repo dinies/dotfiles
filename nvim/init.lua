@@ -1,69 +1,6 @@
--- INFO: introduction
--- this is a minimal neovim configuration written in lua. this is not meant to
--- be a distribution, but rather a template for you to build upon and/or a
--- reference for how to configure neovim using lua in the latest version.
---
--- TUTOR:
--- if you're completely new to neovim and/or vim, consider going through
--- `:Tutor` inside neovim to get a basic idea of how it works.
---     if you don't know what this means, type the following:
---       - <escape key>
---       - :
---       - Tutor
---       - <enter key>
---
--- LUA:
--- some level of familiarity with lua/programming languages are also expected.
--- if you're new to lua, consider going through the official reference:
---    https://www.lua.org/manual
--- or a more friendly tutorial like:
---    https://learnxinyminutes.com/docs/lua/
--- you can also check out `:h lua-guide` inside neovim for a neovim-specific
--- lua guide.
---
--- DEPENDENCIES:
--- this configuration assumes you have the following tools installed on your
--- system:
---    `git` - for vim builtin package manager. (see `:h vim.pack`)
---    `unzip` - for mason, specifically for `clangd`, which the config installs by default
---    `ripgrep` - for fuzzy finding
---    clipboard tool: xclip/xsel/win32yank - for clipboard sharing between OS and neovim (see `h: clipboard-tool`)
---    a nerdfont (ensure the terminal running neovim is using it)
--- run `:checkhealth` inside neovim to see if your system is missing anything.
---
-
+-- lua language quick guide:   https://learnxinyminutes.com/docs/lua/
+-- dependencies: `git`, `unzip`, `ripgrep`, `xclip/xsel`, a nerdfont
 vim.opt.runtimepath:prepend(vim.fn.stdpath("data") .. "/site")
-
---
--- local function setup_cmp_packages()
---   local pack_path = vim.fn.stdpath('config') .. '/pack/plugins/start/'
---   -- List of required repositories: { folder_name, git_url }
---   local plugins = {
---     { "nvim-cmp",     "https://github.com/hrsh7th/nvim-cmp" },
---     { "cmp-nvim-lsp", "https://github.com/hrsh7th/cmp-nvim-lsp" },
---     { "cmp-buffer",   "https://github.com/hrsh7th/cmp-buffer" },
---     { "cmp-path",     "https://github.com/hrsh7th/cmp-path" },
---     { "LuaSnip",      "https://github.com/L3MON4D3/LuaSnip" },
---     { "cmp_luasnip",  "https://github.com/saadparwaiz1/cmp_luasnip" },
---   }
---
---   local installed_any = false
---   for _, plugin in ipairs(plugins) do
---     local name, url = plugin[1], plugin[2]
---     local path = pack_path .. name
---     if vim.fn.empty(vim.fn.glob(path)) > 0 then
---       print("Installing " .. name .. "...")
---       vim.fn.system({ 'git', 'clone', '--depth', '1', url, path })
---       installed_any = true
---     end
---   end
---
---   if installed_any then
---     print("Installation complete. Restart Neovim!")
---   end
--- end
---
--- setup_cmp_packages()
 
 -- INFO: options
 -- these change the default neovim behaviours using the 'vim.opt' API.
@@ -71,71 +8,50 @@ vim.opt.runtimepath:prepend(vim.fn.stdpath("data") .. "/site")
 -- run `:h '{option_name}'` to see what they do and what values they can take.
 -- for example, `:h 'number'` for `vim.opt.number`.
 
--- set <space> as the leader key
 -- must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- enable true color support
 vim.opt.termguicolors = true
-
--- make line numbers default
 vim.opt.number = true
 vim.opt.relativenumber = true
-
--- enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
-
 -- don't show the mode, since it's already in the status line
 vim.opt.showmode = false
-
 -- sync clipboard between OS and Neovim.
 --  remove this option if you want your OS clipboard to remain independent.
 --  see `:help 'clipboard'`
 vim.opt.clipboard = "unnamedplus"
-
 -- enable break indent
 vim.opt.breakindent = true
-
 -- save undo history
 vim.opt.undofile = true
-
 -- case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-
 -- keep signcolumn on by default
 vim.opt.signcolumn = "yes"
-
 -- decrease update time
 vim.opt.updatetime = 250
-
 -- decrease mapped sequence wait time
 -- displays which-key popup sooner
 vim.opt.timeoutlen = 300
-
 -- configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
 -- sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
-
 -- preview substitutions live, as you type!
 vim.opt.inccommand = "split"
-
 -- show which line your cursor is on
 vim.opt.cursorline = true
-
 -- set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
-
 -- enable line wrapping
 vim.opt.wrap = true
-
 -- formatting
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -157,21 +73,7 @@ vim.diagnostic.config({
 -- clear search highlights with <Esc>
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
--- INFO: plugins
--- we install plugins with neovim's builtin package manager: vim.pack
--- and then enable/configure them by calling their setup functions.
---
--- (see `:h vim.pack` for more details on how it works)
--- you can press `gx` on any of the plugin urls below to open them in your
--- browser and check out their documentation and functionality.
--- alternatively, you can run `:h {plugin-name}` to read their documentation.
---
--- plugins are then loaded and configured with a call to `setup` functions
--- provided by each plugin. this is not a rule of neovim but rather a convention
--- followed by the community.
--- these setup calls take a table as an agument and their expected contents can
--- vary wildly. refer to each plugin's documentation for details.
-
+-- plugins
 local plugins = {
   "https://github.com/hrsh7th/nvim-cmp",
   "https://github.com/hrsh7th/cmp-nvim-lsp",
@@ -206,18 +108,7 @@ local plugins_opts = {
 
 vim.pack.add(plugins, plugins_opts)
 
--- INFO: colorscheme
--- vim.pack.add({ "https://github.com/rebelot/kanagawa.nvim" }, { confirm = false })
 vim.cmd.colorscheme("kanagawa")
-
--- INFO: formatting and syntax highlighting
--- vim.pack.add({
---   {
---     src = "https://github.com/nvim-treesitter/nvim-treesitter",
---     -- The 'build' key ensures parsers update when the plugin updates
---     build = ":TSUpdate",
---   },
--- })
 
 -- Guard the configuration so it doesn't error out during the first install
 local ok, ts_config = pcall(require, "nvim-treesitter.config")
@@ -249,9 +140,7 @@ else
 end
 
 
--- INFO: lsp server installation and configuration
-
--- lsp servers we want to use and their configuration
+-- lsp server installation and configuration
 -- see `:h lspconfig-all` for available servers and their settings
 local lsp_servers = {
   lua_ls = {
@@ -262,17 +151,6 @@ local lsp_servers = {
   rust_analyzer = {},
 }
 
--- vim.pack.add({
---   "https://github.com/neovim/nvim-lspconfig", -- default configs for lsps
---
---   -- NOTE: if you'd rather install the lsps through your OS package manager you
---   -- can delete the next three mason-related lines and their setup calls below.
---   -- see `:h lsp-quickstart` for more details.
---   "https://github.com/mason-org/mason.nvim",                      -- package manager
---   "https://github.com/mason-org/mason-lspconfig.nvim",            -- lspconfig bridge
---   "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim", -- auto installer
--- }, { confirm = false })
---
 require("mason").setup()
 require("mason-lspconfig").setup()
 require("mason-tool-installer").setup({
@@ -280,24 +158,53 @@ require("mason-tool-installer").setup({
 })
 
 -- nvim-cmp setup
+---@diagnostic disable-next-line: redundant-parameter
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 
+-- This annotation tells lua_ls what the table structure should look like
+---@type cmp.Config
 cmp.setup({
-  snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  -- Preset mappings provide a stable base to prevent input stuttering
   mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>']      = cmp.mapping.confirm({ select = true }),
-    ['<Tab>']     = cmp.mapping(function(fallback)
-      if cmp.visible() then cmp.select_next_item() else fallback() end
+    ['<C-e>'] = cmp.mapping.abort(),
+    -- Use select = false to prevent Enter from forcing a selection
+    -- and potentially double-firing with other plugins
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    -- Improved Tab logic to handle Snippets and Completion safely
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
     end, { 'i', 's' }),
   }),
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'path' },
-  })
+    { name = 'nvim_lsp', priority = 1000 },
+    { name = 'luasnip',  priority = 750 },
+    { name = 'buffer',   priority = 500 },
+    { name = 'path',     priority = 250 },
+  }),
 })
 
 -- lsp setup
@@ -351,7 +258,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       opts["desc"] = keybinding_desc
       return opts
     end
-
     -- Jump to definition
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, get_opts("go to def"))
     -- Show documentation (Hover)
@@ -373,13 +279,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- INFO: fuzzy finder
--- vim.pack.add({
---   "https://github.com/nvim-lua/plenary.nvim",         -- library dependency
---   "https://github.com/nvim-tree/nvim-web-devicons",   -- icons (nerd font)
---   "https://github.com/nvim-telescope/telescope.nvim", -- the fuzzy finder
--- }, { confirm = false })
-
 require("telescope").setup({})
 
 local pickers = require("telescope.builtin")
@@ -394,9 +293,6 @@ vim.keymap.set("n", "<leader>sr", pickers.resume, { desc = "[S]earch [R]esume" }
 vim.keymap.set("n", "<leader>sh", pickers.help_tags, { desc = "[S]earch [H]elp" })
 vim.keymap.set("n", "<leader>sm", pickers.man_pages, { desc = "[S]earch [M]anuals" })
 
--- -- INFO: better statusline
--- vim.pack.add({ "https://github.com/nvim-lualine/lualine.nvim" }, { confirm = false })
-
 require("lualine").setup({
   options = {
     section_separators = { left = "", right = "" },
@@ -404,22 +300,11 @@ require("lualine").setup({
   },
 })
 
--- -- INFO: keybinding helper
--- vim.pack.add({ "https://github.com/folke/which-key.nvim" }, { confirm = false })
-
 require("which-key").setup({
   spec = {
     { "<leader>s", group = "[S]earch", icon = { icon = "", color = "green" } },
   },
 })
-
-
--- INFO: utility plugins
--- vim.pack.add({
---   "https://github.com/windwp/nvim-autopairs",    -- auto pairs
---   "https://github.com/folke/todo-comments.nvim", -- highlight TODO/INFO/WARN comments
---   { src = "https://github.com/ThePrimeagen/harpoon", version = "harpoon2" },
--- }, { confirm = false })
 
 require("nvim-autopairs").setup()
 require("todo-comments").setup()
